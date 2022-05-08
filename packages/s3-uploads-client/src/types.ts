@@ -50,7 +50,7 @@ export type UploadCompleteCallback = (result: UploadedFile[]) => void
 export type OneUploadCompleteCallback = (
   upload: UploadedFile,
   originalFile: File,
-) => void
+) => Promise<boolean>
 export type UploadErrorCallback = (payload: {
   error: Error
   erroredUpload: InitiatedUploadWithFile

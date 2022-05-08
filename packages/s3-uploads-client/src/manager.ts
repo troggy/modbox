@@ -232,8 +232,13 @@ export class UploadManager {
     this.completedUploads.push(uploadedFile)
 
     // Send completed upload event if callback is provided
-    this.onUploadComplete && this.onUploadComplete(uploadedFile, upload.file)
-    removeCache(uploadedFile.uploadId);
+    if (this.onUploadComplete) {
+      this.onUploadComplete(uploadedFile, upload.file).then(
+        (finalizedOk: boolean) => finalizedOk && removeCache(uploadedFile.uploadId)
+      );
+    } else {
+      removeCache(uploadedFile.uploadId);
+    }
   }
 
   complete(): void {
